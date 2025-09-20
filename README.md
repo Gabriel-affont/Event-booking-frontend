@@ -49,3 +49,5 @@ Built with **.NET 8 Web API (backend)** and **Next.js 14 + Tailwind CSS (fronten
 
 ---
 
+##  Project Structure
+
