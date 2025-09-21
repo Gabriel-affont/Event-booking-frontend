@@ -3,6 +3,14 @@
 import { useState } from "react";
 import { API_URL, getAuthHeader } from "../../components/api";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+
+interface CreateEventResponse {
+  id: number;
+  title: string;
+  message?: string;
+}
 
 export default function CreateEventPage() {
   const [title, setTitle] = useState("");
@@ -16,12 +24,11 @@ export default function CreateEventPage() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
-
     formData.append("location", location);
     formData.append("date", date);
     formData.append("totalSeats", totalSeats.toString());
@@ -32,7 +39,7 @@ export default function CreateEventPage() {
       const res = await fetch(`${API_URL}/Events`, {
         method: "POST",
         headers: {
-          ...getAuthHeader(), // don’t set Content-Type here
+          ...getAuthHeader(), // don't set Content-Type here for FormData
         },
         body: formData,
       });
@@ -42,10 +49,12 @@ export default function CreateEventPage() {
         throw new Error(text || "Failed to create event");
       }
 
-      await res.json();
+      const data: CreateEventResponse = await res.json();
+      console.log("Event created:", data);
       router.push("/dashboard");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to create event';
+      setError(errorMessage);
     }
   };
 
@@ -65,14 +74,14 @@ export default function CreateEventPage() {
       <h1 className="text-2xl font-bold mb-6">Create New Event</h1>
       <form
         onSubmit={submit}
-        className="space-y-4 bg-purple shadow-md p-6 rounded-lg"
+        className="space-y-4 bg-white shadow-md p-6 rounded-lg border"
       >
         <div>
           <label className="block font-medium mb-1">Title</label>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             placeholder="Enter event title"
             required
           />
@@ -83,20 +92,20 @@ export default function CreateEventPage() {
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             placeholder="Enter event details"
+            rows={4}
             required
           />
         </div>
 
-
         <div>
           <label className="block font-medium mb-1">Date</label>
           <input
-            type="date"
+            type="datetime-local"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             required
           />
         </div>
@@ -106,7 +115,7 @@ export default function CreateEventPage() {
           <input
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             placeholder="Event location"
             required
           />
@@ -119,17 +128,20 @@ export default function CreateEventPage() {
               type="number"
               value={totalSeats}
               onChange={(e) => setTotalSeats(parseInt(e.target.value || "0"))}
-              className="w-full border rounded px-3 py-2"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              min="1"
               required
             />
           </div>
           <div>
-            <label className="block font-medium mb-1">Price</label>
+            <label className="block font-medium mb-1">Price ($)</label>
             <input
               type="number"
+              step="0.01"
               value={price}
               onChange={(e) => setPrice(parseFloat(e.target.value || "0"))}
-              className="w-full border rounded px-3 py-2"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              min="0"
               required
             />
           </div>
@@ -141,25 +153,33 @@ export default function CreateEventPage() {
             type="file"
             accept="image/*"
             onChange={(e) => handleImageChange(e.target.files?.[0] ?? null)}
-            className="w-full"
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
           {preview && (
-            <img
-              src={preview}
-              alt="Preview"
-              className="mt-3 w-48 h-32 object-cover rounded"
-            />
+            <div className="mt-3">
+              <Image
+                src={preview}
+                alt="Event preview"
+                width={192}
+                height={128}
+                className="w-48 h-32 object-cover rounded border"
+              />
+            </div>
           )}
         </div>
 
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+            {error}
+          </div>
+        )}
+
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          className="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
         >
           Create Event
         </button>
-
-        {error && <p className="text-red-500 mt-2">{error}</p>}
       </form>
     </main>
   );
