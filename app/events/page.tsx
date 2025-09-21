@@ -10,7 +10,7 @@ export default function EventsPage() {
     const [error, setError] = useState<null | string>(null);
 
     useEffect(() => {
-        // Using consistent API_URL and proper error handling
+        
         fetch(`${API_URL}/Events`)
             .then((res) => {
                 if (!res.ok) {

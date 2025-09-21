@@ -9,7 +9,7 @@ export default function OrganizerDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch events created by this organizer
+  
   useEffect(() => {
     fetch(`${API_URL}/Events/my-events`, {
       headers: {

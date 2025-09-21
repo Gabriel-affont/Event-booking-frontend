@@ -16,10 +16,10 @@ export default function RegisterPage() {
         e.preventDefault();
         setMessage("");
         
-        // Fixed: Using backticks for template literal instead of single quotes
+        
         const res = await fetch(`${API_URL}/auth/register`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" }, // Fixed: proper capitalization
+            headers: { "Content-Type": "application/json" }, 
             body: JSON.stringify(form),
         });
         
@@ -30,7 +30,7 @@ export default function RegisterPage() {
             }, 2000);
         } else {
             const text = await res.text();
-            // Fixed: Using backticks for template literal
+            
             setMessage(`Registration failed: ${text}`);
         }
     };
