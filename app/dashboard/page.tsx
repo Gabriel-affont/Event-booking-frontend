@@ -36,7 +36,7 @@ export default function OrganizerDashboard() {
 
       if (!res.ok) throw new Error("Failed to delete event");
 
-      // remove event from UI immediately
+      
       setEvents((prev) => prev.filter((e) => e.id !== id));
     } catch (err: any) {
       setError(err.message);
