@@ -77,7 +77,7 @@ export default function CreateEventPage() {
         className="space-y-4 bg-purple-100 shadow-md p-6 rounded-lg border"
       >
         <div>
-          <label className="block font-medium mb-1">Title</label>
+          <label className="block font-medium mb-1 text-black-500">Title</label>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -88,7 +88,7 @@ export default function CreateEventPage() {
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Description</label>
+          <label className="block font-medium mb-1 text-black-500">Description</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -100,7 +100,7 @@ export default function CreateEventPage() {
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Date</label>
+          <label className="block font-medium mb-1 text-black-500">Date</label>
           <input
             type="datetime-local"
             value={date}
@@ -111,7 +111,7 @@ export default function CreateEventPage() {
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Location</label>
+          <label className="block font-medium mb-1 text-black-500">Location</label>
           <input
             value={location}
             onChange={(e) => setLocation(e.target.value)}
@@ -121,9 +121,9 @@ export default function CreateEventPage() {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 ">
           <div>
-            <label className="block font-medium mb-1">Total Seats</label>
+            <label className="block font-medium mb-1 text-black-500">Total Seats</label>
             <input
               type="number"
               value={totalSeats}
@@ -134,7 +134,7 @@ export default function CreateEventPage() {
             />
           </div>
           <div>
-            <label className="block font-medium mb-1">Price ($)</label>
+            <label className="block font-medium mb-1 text-black-500">Price ($)</label>
             <input
               type="number"
               step="0.01"
@@ -148,7 +148,7 @@ export default function CreateEventPage() {
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Event Image</label>
+          <label className="block font-medium mb-1 text-black-500">Event Image</label>
           <input
             type="file"
             accept="image/*"
