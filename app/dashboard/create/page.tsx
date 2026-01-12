@@ -74,7 +74,7 @@ export default function CreateEventPage() {
       <h1 className="text-2xl font-bold mb-6">Create New Event</h1>
       <form
         onSubmit={submit}
-        className="space-y-4 bg-white shadow-md p-6 rounded-lg border"
+        className="space-y-4 bg-purple-100 shadow-md p-6 rounded-lg border"
       >
         <div>
           <label className="block font-medium mb-1">Title</label>

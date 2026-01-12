@@ -19,11 +19,11 @@ export default function EventsPage() {
                 return res.json();
             })
             .then((data) => {
-                console.log('Events loaded:', data); // Debug log
+                console.log('Events loaded:', data); 
                 setEvents(data);
             })
             .catch((err) => {
-                console.error('Error loading events:', err); // Debug log
+                console.error('Error loading events:', err); 
                 setError(err.message);
             })
             .finally(() => setLoading(false));
